@@ -1,0 +1,75 @@
+<hello name="{{ name }}"></hello>
+<p>Start editing to see some magic happen :)</p>
+
+<p>小明的出生日期_1:{{ birthday }}</p>
+
+<!-- 01. 管道操作符"|", 使用date管道，来转换小明的生日格式。 -->
+<p>小明的出生日期_2:{{ birthday | date }}</p>
+
+<!-- 02. 大小写转换管道 -->
+<h5>转位为大写：{{ test_str | uppercase }}</h5>
+
+<h4>转位为小写：{{ test_str | lowercase }}</h4>
+
+<!-- 03.  日期格式, 转换管道 -->
+<p>现在的时间是：{{ today }}</p>
+<p>现在的时间是：{{ today | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+
+<!-- 04.  小数位数管道 -->
+<!-- 格式： {最少整数位数}.{最少小数位数}-{大多小数位数} -->
+<p>{{ test_number | number: '3.2-4' }}</p>
+<p>{{ test_number | number: '4.3-5' }}</p>
+
+<!-- 05. 货币管道 
+各国货币代码表(Currency Code) :
+AUD - 澳元(Australia Dollar) 
+CAD - 加元(Canadian Dollar) 
+CHF - 瑞士法郎(Swiss Franc) 
+CNY - 人民币(Chinese Yuan) 
+EUR - 欧元(Euro) 
+-->
+<p>{{ test_money | currency: 'USD':'code' }}</p>
+<p>{{ test_money | currency: 'USD':'symbol' }}</p>
+
+<p>{{ test_money | currency: 'CNY':'symbol' }}</p>
+<p>{{ test_money | currency: 'CNY':'code' }}</p>
+
+<!-- 06.对象序列化管道： 使用json管道来实现对象序列化 -->
+<p>{{ student | json }}</p>
+
+<!-- 07. slice管道： 截取字符串 or 数组的内容 -->
+<!-- slice: start: end 截取不包含end索引的字符 -1:代表最后一位 -->
+<!-- message = '1234567890'; -->
+<p>{{ message | slice: 1:4 }}</p>
+<p>{{ message | slice: -1 }}</p>
+<p>{{ message | slice: -3:-1 }}</p>
+<p>{{ message | slice: -3 }}</p>
+
+<!-- 08. 管道参数
+  管道可以接受任意数量的可选参数，来对其输出进行微调。可以在管道名字后面，
+  添加一个冒号“:”, 再跟一个参数值，来为管道添加参数。
+-->
+<p>小明的出生日期_3:{{ birthday | date: 'yyyy-MM-dd' }}</p>
+<p>小明的出生日期_3:{{ birthday | date: 'MM-dd-yyyy' }}</p>
+<p>小明的出生日期_3:{{ birthday | date: 'MM/dd/yyyy' }}</p>
+
+<!-- 08.01 把管道参数，绑定到该组件的format属性上 -->
+<div style="background-color: yellow">
+  <p>小明的出生日期_4:{{ birthday | date: format123 }}</p>
+  <button (click)="toggleFormat()">切换格式</button>
+</div>
+
+<!-- 09. 链式管道 -->
+<p>小明的出生日期_5:{{ birthday | date: 'fullDate' | lowercase }}</p>
+<p>小明的出生日期_6:{{ birthday | date: 'fullDate' | uppercase }}</p>
+
+<!-- 10. 自定义管道 -->
+<!-- 默认： 2倍 -->
+<p>最终结结果为：{{ sum | power }} 没有参数的情况下，默认为2倍</p>
+
+<p>最终结结果为：{{ sum | power: 6 }} 有参数的情况下</p>
+
+<!-- 11.  双向数据绑定 和。自定义管道组合 -->
+<div>原始数据: <input [(ngModel)]="sum" /></div>
+<div>参数: <input [(ngModel)]="args" /></div>
+<p>计算结果: {{ sum | power: args }}</p>
